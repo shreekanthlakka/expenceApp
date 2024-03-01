@@ -16,7 +16,7 @@ const expenceValidationSchema = {
             },
         },
     },
-    exanceDate: {
+    expanceDate: {
         in: ["body"],
         notEmpty: {
             errorMessage: "date should not be empty",
@@ -24,15 +24,28 @@ const expenceValidationSchema = {
         exists: {
             errorMessage: "Expense date is required",
         },
+        default: { defaultValue: new Date().toISOString() },
         custom: {
             options: function (val) {
-                if (new Date(val) > new Date()) {
+                if (new Date(val) >= new Date()) {
                     throw new Error(
                         "expance date cannot be greater than today"
                     );
                 }
                 return true;
             },
+        },
+    },
+    category: {
+        in: ["body"],
+        notEmpty: {
+            errorMessage: "Category Id cannot be Empty",
+        },
+        exists: {
+            errorMessage: "This Category Id  does not exist.",
+        },
+        isMongoId: {
+            errorMessage: "Invalid Category ID",
         },
     },
     // category: {

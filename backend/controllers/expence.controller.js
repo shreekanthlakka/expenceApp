@@ -7,12 +7,11 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 const createExpence = asyncHandler(async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({
-            success: false,
-            errors: errors.array(),
-            data: null,
-        });
+        return res
+            .status(400)
+            .json(new ApiErrors(400, "bad request", errors.array()));
     }
+    const { amount, category, description, expanceDate } = req.body;
     const newExpence = await Expence.create({
         amount,
         category,
@@ -40,6 +39,12 @@ const getAllExpences = asyncHandler(async (req, res) => {
 });
 
 const getAExpence = asyncHandler(async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res
+            .status(400)
+            .json(new ApiErrors(400, "Bad Request", errors.array()));
+    }
     const expence = await Expence.findById(req.params.id);
     if (!expence) throw new ApiErrors(404, "no expence was found with this id");
     res.status(200).json(
@@ -47,7 +52,7 @@ const getAExpence = asyncHandler(async (req, res) => {
     );
 });
 const updateExpence = asyncHandler(async (req, res) => {
-    // const { amount, description, expanceDate } = req.body;
+    const { amount, description, expanceDate } = req.body;
     // if (!amount && !category && !description) {
     //     throw new ApiErrors(
     //         "400",
@@ -57,11 +62,9 @@ const updateExpence = asyncHandler(async (req, res) => {
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        // return res.status(400).json({
-        //     success: false,
-        //     errors: errors.array(),
-        // });
-        throw new ApiErrors(400, "validation", errors);
+        return res
+            .status(400)
+            .json(new ApiErrors(400, "bad request", errors.array()));
     }
     const updatedExpence = await Expence.findByIdAndUpdate(
         req.params.id,

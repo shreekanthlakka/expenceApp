@@ -1,8 +1,8 @@
 /*eslint-disable react/prop-types*/
 
 import { useState } from "react";
-import { useDeleteCategory } from "../../ApiServices/useDeleteCategory";
-import { useUpdateCategory } from "../../ApiServices/useUpdateCategory";
+import { useDeleteCategory } from "./ApiServices/useDeleteCategory.js";
+import { useUpdateCategory } from "./ApiServices/useUpdateCategory.js";
 
 function Category({ category }) {
     const id = category._id;
@@ -37,7 +37,9 @@ function Category({ category }) {
             )}
             <button
                 className="border-2 border-solid"
-                onClick={() => setUpdate((prev) => !prev)}
+                onClick={() => {
+                    setUpdate((prev) => !prev);
+                }}
             >
                 {update ? "edit" : "save"}
             </button>

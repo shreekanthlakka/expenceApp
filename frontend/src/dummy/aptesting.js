@@ -1,7 +1,7 @@
 const URI = "http://localhost:8000/api/v1";
 
 const createCategory = async (categoryname) => {
-    const res = await fetch(`${URI}/categories/new`, {
+    const res = await fetch(`${URI}/categories`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -9,9 +9,8 @@ const createCategory = async (categoryname) => {
         body: JSON.stringify({ categoryname }),
     });
 
-    console.log(res);
     const data = await res.json();
-    console.log(data);
+    return data.success ? data.data : data.errors;
 };
 
-createCategory("Food");
+createCategory("TRAVELL");

@@ -6,13 +6,17 @@ const validateId = {
         exists: {
             errorMessage: "Id is not  provided.",
         },
-        custom: {
-            options: function (value, { req }) {
-                if (!isValidObjectId(value))
-                    throw new Error("Category id must be valid ObjectID");
-                return true;
-            },
+        isMongoId: {
+            errorMessage: "Invalid ID format.",
         },
+        // custom: {
+        //     options: function (value, { req }) {
+        //         console.log(value, " <--------value");
+        //         if (!isValidObjectId(value))
+        //             throw new Error("Category id must be valid ObjectID");
+        //         return true;
+        //     },
+        // },
     },
 };
 

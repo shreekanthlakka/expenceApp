@@ -1,3 +1,5 @@
+import Category from "../models/category.model.js";
+
 const categoryValidationSchema = {
     categoryname: {
         in: ["body"],
@@ -11,7 +13,7 @@ const categoryValidationSchema = {
         custom: {
             options: async function (val) {
                 const catExist = await Category.findOne({ categoryname: val });
-                if (catExist) throw new Error("category name already exists");
+                if (catExist) throw new Error("category name already taken");
                 return true;
             },
         },

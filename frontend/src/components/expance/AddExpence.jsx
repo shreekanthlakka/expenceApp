@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCategory } from "../../ApiServices/useCategory";
+import { useCategory } from "../categories/ApiServices/useCategory.js";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useCreateExpence } from "./ApiServices/useCreateExpence";

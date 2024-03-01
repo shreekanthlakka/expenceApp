@@ -1,12 +1,28 @@
-import { useCreateCategory } from "../../ApiServices/useCreateCategory";
+import { useState } from "react";
+import { useCreateCategory } from "./ApiServices/useCreateCategory";
 
 function AddCategories() {
+    const [errors, setErrors] = useState([]);
     const { createNewCategory } = useCreateCategory();
     function handleSubmit(e) {
         e.preventDefault();
         const categoryname = e.target[0].value;
-        createNewCategory(categoryname);
+        createNewCategory(
+            categoryname,
+            {
+                onSuccess: (data) => {
+                    if (!data.ok) {
+                        setErrors(data.responce);
+                    }
+                    console.log("data on success ----===>", data);
+                },
+            },
+            {
+                onError: (error) => console.log("error ", error),
+            }
+        );
         e.target[0].value = "";
+        setErrors([]);
     }
     return (
         <div>
@@ -22,6 +38,9 @@ function AddCategories() {
                 <button type="submit" className="border-solid border-2 m-4 p-2">
                     Submit
                 </button>
+                {errors.length > 0 && (
+                    <h3 className=" text-red-500">error:{errors[0].msg}</h3>
+                )}
             </form>
         </div>
     );

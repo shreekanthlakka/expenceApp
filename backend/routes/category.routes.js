@@ -2,7 +2,6 @@ import express from "express";
 import { checkSchema } from "express-validator";
 const router = express.Router();
 import {
-    createCategory,
     allCategories,
     getCategory,
     updateCategory,
@@ -10,17 +9,21 @@ import {
     createNewCategory,
 } from "../controllers/category.controller.js";
 import { categoryValidationSchema } from "../validatorSchemas/category.validateSchema.js";
+import { validateId } from "../validatorSchemas/id.validationSchema.js";
 
 router
-    .route("/new")
+    .route("/")
+    .get(allCategories)
     .post(checkSchema(categoryValidationSchema), createNewCategory);
-
-router.route("/all").get(allCategories);
 
 router
     .route("/:id")
-    .get(getCategory)
-    .patch(checkSchema(categoryValidationSchema), updateCategory)
-    .delete(deleteCategory);
+    .get(checkSchema(validateId), getCategory)
+    .patch(
+        checkSchema(validateId),
+        checkSchema(categoryValidationSchema),
+        updateCategory
+    )
+    .delete(checkSchema(validateId), deleteCategory);
 
 export default router;

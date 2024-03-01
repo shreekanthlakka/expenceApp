@@ -2,11 +2,10 @@ const URI = "http://localhost:8000/api/v1";
 
 const getAllExpences = async () => {
     try {
-        const res = await fetch(`${URI}/expences/all`);
+        const res = await fetch(`${URI}/expences`);
         if (!res.ok) throw new Error("error while fetching expences");
-        const { data } = await res.json();
-        console.log(data);
-        return data;
+        const data = await res.json();
+        return data.success ? data.data : data.errors;
     } catch (error) {
         console.log("Error = ", error.message);
     }
@@ -14,7 +13,7 @@ const getAllExpences = async () => {
 
 const createExpence = async (categoryId, amount, description, expanceDate) => {
     try {
-        const res = await fetch(`${URI}/expences/new`, {
+        const res = await fetch(`${URI}/expences`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -28,8 +27,10 @@ const createExpence = async (categoryId, amount, description, expanceDate) => {
         });
         if (!res.ok) throw new Error("Error while  creating Expence!");
 
-        const { data } = await res.json();
-        return data;
+        const data = await res.json();
+        return data.success
+            ? { ok: true, responce: data.data }
+            : { ok: false, responce: data.errors };
     } catch (error) {
         console.log("Error = ", error.message);
     }
@@ -49,7 +50,7 @@ const updateExpence = async (selected, amount, description, expanceDate) => {
             }),
         });
         const { data } = await res.json();
-        return data;
+        data.success ? data.data : data.errors;
     } catch (error) {
         console.log(error.message);
     }

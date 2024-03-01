@@ -1,4 +1,4 @@
-import { useCategory } from "../../ApiServices/useCategory";
+import { useCategory } from "./ApiServices/useCategory.js";
 import Category from "./Category";
 
 function CategoriesListing() {

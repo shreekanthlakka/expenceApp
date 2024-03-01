@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const expenceSchema = mongoose.Schema(
+const expenceSchema = new mongoose.Schema(
     {
         category: {
             type: mongoose.Schema.Types.ObjectId,
