@@ -50,7 +50,9 @@ const updateExpence = async (selected, amount, description, expanceDate) => {
             }),
         });
         const { data } = await res.json();
-        data.success ? data.data : data.errors;
+        return data.success
+            ? { ok: true, responce: data.data }
+            : { ok: false, errors: data.errors };
     } catch (error) {
         console.log(error.message);
     }
@@ -80,10 +82,28 @@ const getSingleExpences = async (id) => {
     }
 };
 
+const deleteAllExpencesByCategoryId = async (categoryId) => {
+    try {
+        const res = await fetch(`${URI}/expences/categoryId/${categoryId}`, {
+            method: "DELETE",
+        });
+        if (!res.ok)
+            throw new Error(
+                "error while deleting expences based on categoryId "
+            );
+
+        const { data } = await res.json();
+        return data;
+    } catch (error) {
+        console.log("Error = ", error.message);
+    }
+};
+
 export {
     getAllExpences,
     createExpence,
     updateExpence,
     deleteExpence,
     getSingleExpences,
+    deleteAllExpencesByCategoryId,
 };

@@ -21,6 +21,9 @@ function AddExpence() {
         };
         console.log(expenceObj, "date =====", date.toLocaleDateString());
         createExpence(expenceObj);
+        setAmount("");
+        setDescription("");
+        setDate(new Date());
     }
 
     return (

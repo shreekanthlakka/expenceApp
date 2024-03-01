@@ -1,5 +1,6 @@
 import AddCategories from "./components/categories/AddCategories";
 import CategoriesListing from "./components/categories/CategoriesListing";
+import PieChart from "./components/charts/PieChart";
 import AddExpence from "./components/expance/AddExpence";
 import ExpenceListing from "./components/expance/ExpenceListing";
 
@@ -14,6 +15,9 @@ function App() {
             <div className="flex flex-row justify-center space-x-10 m-8 font-medium ">
                 <ExpenceListing />
                 <AddExpence />
+            </div>
+            <div>
+                <PieChart />
             </div>
         </div>
     );

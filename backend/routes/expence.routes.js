@@ -7,6 +7,7 @@ import {
     getAExpence,
     updateExpence,
     deleteExpence,
+    deleteExpencesByCategoryId,
 } from "../controllers/expence.controller.js";
 import { expenceValidationSchema } from "../validatorSchemas/expence.validateSchema.js";
 import { validateId } from "../validatorSchemas/id.validationSchema.js";
@@ -33,10 +34,16 @@ router
             .exists()
             .notEmpty()
             .isDate()
-            .custom((val) => new Date(val) < Date.now())
+            .custom((val) => {
+                console.log("input date ==> ", val, "now ==> ", new Date());
+
+                new Date(val) >= new Date();
+            })
             .withMessage("The date should not be greater than today."),
         updateExpence
     )
     .delete(checkSchema(validateId), deleteExpence);
+
+router.route("/categoryId/:categoryId").delete(deleteExpencesByCategoryId);
 
 export default router;

@@ -4,7 +4,7 @@ const app = express();
 
 app.use(express.json());
 app.use(urlencoded({ extended: true }));
-app.use(morgan("combined"));
+app.use(morgan("tiny"));
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");

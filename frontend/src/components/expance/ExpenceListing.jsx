@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDeleteExpance } from "./ApiServices/useDeleteExpence";
 import { useExpences } from "./ApiServices/useExpences";
-import EditForm from "../categories/EditForm";
+import EditForm from "./EditForm";
 
 function ExpenceListing() {
     const [edit, setEdit] = useState(true);

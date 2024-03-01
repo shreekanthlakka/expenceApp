@@ -1,8 +1,10 @@
 /*eslint-disable react/prop-types*/
 
 import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useDeleteCategory } from "./ApiServices/useDeleteCategory.js";
 import { useUpdateCategory } from "./ApiServices/useUpdateCategory.js";
+import { useDeleteExpancesByCategoryId } from "../expance/ApiServices/useDeleteExpencesByCategoryId.js";
 
 function Category({ category }) {
     const id = category._id;
@@ -10,6 +12,8 @@ function Category({ category }) {
     const [name, setName] = useState("");
     const { updateCategory } = useUpdateCategory();
     const { deleteCategory } = useDeleteCategory();
+    const { deleteAllExpenceByCategoryId } = useDeleteExpancesByCategoryId();
+    const queryClient = useQueryClient();
     function handleBlur() {
         updateCategory({ id, name });
     }
@@ -45,7 +49,16 @@ function Category({ category }) {
             </button>
             <button
                 className="border-2 border-solid"
-                onClick={() => deleteCategory(category._id)}
+                onClick={() => {
+                    deleteCategory(category._id);
+                    deleteAllExpenceByCategoryId(category._id, {
+                        onSuccess: () => {
+                            queryClient.invalidateQueries({
+                                queryKey: ["expence"],
+                            });
+                        },
+                    });
+                }}
             >
                 Delete
             </button>

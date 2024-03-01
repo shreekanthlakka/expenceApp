@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import DatePicker from "react-datepicker";
-import { useEditExpence } from "../expance/ApiServices/useEditExpence";
+import { useEditExpence } from "./ApiServices/useEditExpence";
 
 function EditForm({ setEdit, selected, expence }) {
     const { editExpence } = useEditExpence();
@@ -17,8 +17,12 @@ function EditForm({ setEdit, selected, expence }) {
         const description = e.target["description"].value;
         const expanceDate = date;
 
+        console.log("date ->", expanceDate);
         editExpence({ selected, amount, description, expanceDate });
         setEdit((prev) => !prev);
+        // e.target["amount"].value = "";
+        // e.target["description"].value = "";
+        // setDate(new Date());
     }
     return (
         <>

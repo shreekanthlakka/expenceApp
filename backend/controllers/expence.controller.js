@@ -101,12 +101,35 @@ const deleteExpence = asyncHandler(async (req, res) => {
     );
 });
 
+const deleteExpencesByCategoryId = asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(200).json({
+            success: false,
+            errors: errors.array(),
+        });
+    }
+    const deletedExpences = await Expence.deleteMany({
+        category: req.params.categoryId,
+    });
+    if (!deletedExpences) {
+        throw new ApiErrors(
+            404,
+            "The expence you are trying to delete does not exists by given categoryId."
+        );
+    }
+    res.status(200).json(
+        new ApiResponce(200, deletedExpences, "deleated sucessfully")
+    );
+});
+
 export {
     createExpence,
     getAllExpences,
     getAExpence,
     updateExpence,
     deleteExpence,
+    deleteExpencesByCategoryId,
 };
 
 /**

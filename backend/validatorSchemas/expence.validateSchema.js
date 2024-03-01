@@ -24,7 +24,7 @@ const expenceValidationSchema = {
         exists: {
             errorMessage: "Expense date is required",
         },
-        default: { defaultValue: new Date().toISOString() },
+        default: { defaultValue: new Date() },
         custom: {
             options: function (val) {
                 if (new Date(val) >= new Date()) {
