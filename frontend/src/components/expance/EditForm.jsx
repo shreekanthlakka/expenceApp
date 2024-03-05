@@ -26,7 +26,7 @@ function EditForm({ setEdit, selected, expence }) {
     }
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className=" flex flex-col gap-y-4">
                 <DatePicker
                     dateFormat={"dd/MM/yyyy"}
                     selected={date}
@@ -48,9 +48,16 @@ function EditForm({ setEdit, selected, expence }) {
                     placeholder="Description..."
                     className=" border-black border-solid border-2 m-2 w-50"
                 />
-                <button type="submit">Save</button>
+                <button type="submit" className=" border-2">
+                    Save
+                </button>
+                <button
+                    className=" border-2"
+                    onClick={() => setEdit((prev) => !prev)}
+                >
+                    Close
+                </button>
             </form>
-            <button onClick={() => setEdit((prev) => !prev)}>Close</button>
         </>
     );
 }

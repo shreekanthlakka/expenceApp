@@ -3,6 +3,7 @@ import Expence from "../models/expence.model.js";
 import { ApiErrors } from "../utils/ApiErrors.js";
 import { ApiResponce } from "../utils/ApiResponce.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import ApiFutures from "../utils/ApiFutures.js";
 
 const createExpence = asyncHandler(async (req, res) => {
     const errors = validationResult(req);
@@ -27,7 +28,19 @@ const createExpence = asyncHandler(async (req, res) => {
 });
 
 const getAllExpences = asyncHandler(async (req, res) => {
-    const allExpences = await Expence.find().populate({
+    // const allExpences = await Expence.find().populate({
+    //     path: "category",
+    //     model: "Category",
+    //     select: "categoryname",
+    // });
+
+    const features = new ApiFutures(Expence.find(), req.query)
+        .filter()
+        .sort()
+        .fields()
+        .paginate();
+
+    const allExpences = await features.query.populate({
         path: "category",
         model: "Category",
         select: "categoryname",

@@ -3,6 +3,7 @@ import Category from "../models/category.model.js";
 import { ApiErrors } from "../utils/ApiErrors.js";
 import { ApiResponce } from "../utils/ApiResponce.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import ApiFutures from "../utils/ApiFutures.js";
 
 const createNewCategory = asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
@@ -24,7 +25,12 @@ const createNewCategory = asyncHandler(async (req, res, next) => {
 });
 
 const allCategories = asyncHandler(async (req, res) => {
-    const categories = await Category.find();
+    const sortedCategories = new ApiFutures(Category.find(), req.query)
+        .filter()
+        .sort()
+        .fields();
+    const categories = await sortedCategories.query;
+    // const categories = await Category.find();
     if (!categories) throw new ApiErrors(404, "No Categories Found!");
     res.status(200).json(new ApiResponce(200, categories, "All Categories"));
 });

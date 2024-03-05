@@ -115,4 +115,4 @@ const output = data.reduce((acc, val) => {
         : { ...acc, [val.category.categoryname]: val.amount });
 }, {});
 
-console.log("output ===> ", output);
+console.log("output ", output);
