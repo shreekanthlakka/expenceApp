@@ -1,5 +1,13 @@
 import { useCreateCategory } from "./ApiServices/useCreateCategory";
 import { useState } from "react";
+import styled from "styled-components";
+import toast from "react-hot-toast";
+
+const ErrorMsg = styled.p`
+    font-weight: 600;
+    font-size: small;
+    color: red;
+`;
 
 function AddCategories() {
     const [errors, setErrors] = useState([]);
@@ -14,11 +22,12 @@ function AddCategories() {
                     if (!data.ok) {
                         setErrors(data.responce);
                     }
-                    console.log("data on success ----===>", data);
+                    // console.log("data on success ----===>", data);
+                    toast.success("Category added successfully");
                 },
             },
             {
-                onError: (error) => console.log("error ", error),
+                onError: (error) => toast.error(error.message),
             }
         );
         e.target[0].value = "";
@@ -32,15 +41,10 @@ function AddCategories() {
                 <input
                     type="text"
                     id="category"
-                    className=" border-black border-solid border-2"
                     placeholder="Enter a new category..."
                 />
-                <button type="submit" className="border-solid border-2 m-4 p-2">
-                    Submit
-                </button>
-                {errors.length > 0 && (
-                    <h3 className=" text-red-500">error:{errors[0].msg}</h3>
-                )}
+                <button type="submit">Submit</button>
+                {errors.length > 0 && <ErrorMsg>{errors[0].msg}</ErrorMsg>}
             </form>
         </div>
     );

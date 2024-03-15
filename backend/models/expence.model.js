@@ -5,7 +5,7 @@ const expenceSchema = new mongoose.Schema(
         category: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Category",
-            required: true,
+            // required: true,
         },
         amount: {
             type: Number,
@@ -17,7 +17,6 @@ const expenceSchema = new mongoose.Schema(
         },
         expanceDate: {
             type: Date,
-            required: true,
             default: Date.now,
         },
     },

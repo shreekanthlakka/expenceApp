@@ -84,7 +84,7 @@ const updateExpence = asyncHandler(async (req, res) => {
         {
             amount,
             description,
-            expanceDate,
+            expanceDate: expanceDate,
         },
         { new: true }
     );

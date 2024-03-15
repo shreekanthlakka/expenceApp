@@ -26,8 +26,12 @@ const expenceValidationSchema = {
         },
         default: { defaultValue: new Date() },
         custom: {
-            options: function (val) {
-                if (new Date(val) >= new Date()) {
+            options: function (value) {
+                console.log(" date value ==> ", value);
+                if (
+                    new Date(value).toISOString().split("T")[0] >=
+                    new Date().toISOString().split("T")[0]
+                ) {
                     throw new Error(
                         "expance date cannot be greater than today"
                     );

@@ -1,17 +1,27 @@
-import { useExpences } from "../expance/ApiServices/useExpences";
+import { useExpences } from "../expences/ApiServices/useExpences";
 import { Chart } from "react-google-charts";
 
 function PieChart() {
     const { expences } = useExpences();
 
+    // const chartdata = expences?.reduce((acc, val) => {
+    //     return (acc = Object.keys(acc).includes(val.category?.categoryname)
+    //         ? {
+    //               ...acc,
+    //               [val.category?.categoryname]:
+    //                   acc[val.category?.categoryname] + val.amount,
+    //           }
+    //         : { ...acc, [val.category?.categoryname]: val.amount });
+    // }, {});
+
     const chartdata = expences?.reduce((acc, val) => {
-        return (acc = Object.keys(acc).includes(val.category?.categoryname)
+        return Object.keys(acc).includes(val.category?.categoryname)
             ? {
                   ...acc,
-                  [val.category?.categoryname]:
+                  [val.category.categoryname]:
                       acc[val.category?.categoryname] + val.amount,
               }
-            : { ...acc, [val.category?.categoryname]: val.amount });
+            : { ...acc, [val.category?.categoryname]: val.amount };
     }, {});
 
     const data = chartdata ? Object.entries(chartdata) : [];

@@ -33,11 +33,12 @@ router
         body("expanceDate")
             .exists()
             .notEmpty()
-            .isDate()
             .custom((val) => {
-                console.log("input date ==> ", val, "now ==> ", new Date());
-
-                new Date(val) >= new Date();
+                if (
+                    new Date(val).toISOString().split("T")[0] <=
+                    new Date().toISOString().split("T")[0]
+                )
+                    return true;
             })
             .withMessage("The date should not be greater than today."),
         updateExpence
